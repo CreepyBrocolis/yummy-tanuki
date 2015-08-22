@@ -1,8 +1,13 @@
-function Brocoli(stage, spriteSheet, img) {
-  var brocoli = new createjs.Sprite(spriteSheet, "stand");
+function Brocoli(stage, spriteSheet, img, initialPos) {
+  var brocoli = new createjs.Sprite(spriteSheet, "idle");
+  brocoli.regX = 60;
+  brocoli.regY = 60;
+  brocoli.y = initialPos - 60;
+  brocoli.x = 60;
   stage.addChild(brocoli);
 
   var grapple = Grapple(stage, img);
+  grapple.toggleHide();
   dispatcher.addEventListener("GRAPPLE_OK", moveToGrapple);
 
   var isMoving = false;
@@ -44,6 +49,7 @@ function Brocoli(stage, spriteSheet, img) {
 
       if (brocoli.x === wantedPos.x && brocoli.y === wantedPos.y) {
         movingToGrapple = false;
+        grapple.toggleHide();
       }
     }
 
@@ -61,8 +67,11 @@ function Brocoli(stage, spriteSheet, img) {
   };
 
   var grap = function (event) {
-    grappling = true;
-    grapple.grapple(event.stageX, event.stageY);
+    if (!grappling) {
+      grappling = true;
+      grapple.toggleHide();
+      grapple.grapple(event.stageX, event.stageY);
+    }
   };
 
 
@@ -89,9 +98,6 @@ function Brocoli(stage, spriteSheet, img) {
 
   return {
     tick: tick,
-    grapple: grap,
-    setY: function (y) {
-      brocoli.y = y;
-    }
+    grapple: grap
   };
 }

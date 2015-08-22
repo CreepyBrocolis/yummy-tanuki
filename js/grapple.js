@@ -1,5 +1,7 @@
 function Grapple(stage, img) {
   var grapple = new createjs.Bitmap(img);
+  grapple.regX = img.width / 2;
+  grapple.regY = img.height / 2;
   stage.addChild(grapple);
 
   var speed = 200;
@@ -38,6 +40,9 @@ function Grapple(stage, img) {
       return grapple.y
     },
     grapple: grappleTo,
-    tick: tick
+    tick: tick,
+    toggleHide: function() {
+      grapple.visible = ! grapple.visible;
+    }
   }
 }

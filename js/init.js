@@ -55,13 +55,18 @@ function init() {
     {src: "hills.png", id: "hills"},
     {src: "buildings.png", id: "buildings"},
     {src: "sky.png", id: "sky"},
-    {src: "grapple-head.png", id: "grapple"},
-    {src: "broco.png", id: "broco"}
+    {src: "grapple-head.png", id: "grapple"}
   ];
 
-  //for (var i = 0; i < 24; ++i) {
-  //  manifest.push({src: "testAnim/testAnim.00" + (i < 10 ? "0" : "") + i + ".png", id: "tuxAnim" + i});
-  //}
+  for (var i = 0; i < 30; ++i) {
+    manifest.push({src: "iddle/iddle.00" + (i < 10 ? "0" : "") + i + ".png", id: "idle" + i});
+  }
+  for (i = 0; i < 30; ++i) {
+    manifest.push({src: "jump/jump.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
+  }
+  for (i = 0; i < 30; ++i) {
+    manifest.push({src: "land/land.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
+  }
 
   loader = new createjs.LoadQueue(false);
   loader.addEventListener("progress", handleProgress);
@@ -81,7 +86,6 @@ function handleComplete(event) {
   var buildingImg = loader.getResult("buildings");
   var hillImg = loader.getResult("hills");
   var grappleImg = loader.getResult("grapple");
-  var brocoImg = loader.getResult("broco");
 
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
@@ -100,13 +104,30 @@ function handleComplete(event) {
   stage.addChild(ground);
 
   var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
-  spriteSheetBuilder.addFrame(new createjs.Bitmap(brocoImg));
-  spriteSheetBuilder.addFrame(new createjs.Bitmap(brocoImg));
-  spriteSheetBuilder.addAnimation("stand", [0, 1]);
+  var spriteFrames = [];
+  for (var i = 0; i < 30; ++i) {
+    spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("idle" + i)));
+    spriteFrames.push(i);
+  }
+  spriteSheetBuilder.addAnimation("idle", spriteFrames);
+
+  spriteFrames = [];
+  for (i = 0; i < 30; ++i) {
+    spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("jump" + i)));
+    spriteFrames.push(30 + i);
+  }
+  spriteSheetBuilder.addAnimation("jump", spriteFrames, "land");
+
+  spriteFrames = [];
+  for (i = 0; i < 30; ++i) {
+    spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("land" + i)));
+    spriteFrames.push(60 + i);
+  }
+  spriteSheetBuilder.addAnimation("land", spriteFrames);
+
   var spriteSheet = spriteSheetBuilder.build();
 
-  brocoli = Brocoli(stage, spriteSheet, grappleImg);
-  brocoli.setY(height - groundImg.height);
+  brocoli = Brocoli(stage, spriteSheet, grappleImg, height - groundImg.height);
 
   stage.addEventListener("click", brocoli.grapple);
 
