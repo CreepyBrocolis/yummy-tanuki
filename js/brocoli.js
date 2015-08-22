@@ -20,8 +20,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var grappling = false,
     movingToGrapple = false,
-    wantedPos = {x: movementSpeed, y: movementSpeed},
-    lastDistanceTraveled = 0;
+    wantedPos = {x: movementSpeed, y: movementSpeed};
 
   function moveToGrapple() {
     // Move broco to the grapple

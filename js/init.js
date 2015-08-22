@@ -94,12 +94,12 @@ function handleComplete(event) {
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
 
-  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 8);
+  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 2);
   buildings.setAlpha(0.3);
 
-  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 16);
+  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 4);
 
-  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 32);
+  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 8);
 
   var ground = new createjs.Shape();
   ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
@@ -159,10 +159,9 @@ function tick(event) {
   brocoli.tick(deltaS);
 
   if (brocoli.isMoving()) {
-    var brocoliDistance = deltaS * brocoli.distance();
-    hill.tick(brocoliDistance, brocoli.direction());
-    buildings.tick(brocoliDistance, brocoli.direction());
-    buildings2.tick(brocoliDistance, brocoli.direction());
+    hill.tick(brocoli.distance(), brocoli.direction());
+    buildings.tick(brocoli.distance(), brocoli.direction());
+    buildings2.tick(brocoli.distance(), brocoli.direction());
   }
 
   stage.update(event);
