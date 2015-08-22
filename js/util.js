@@ -1,32 +1,20 @@
-function moveTo(deltaS, accelerationVector, right, down, obj, wantedPos) {
-  var xDistance = deltaS * accelerationVector.x,
-    yDistance = deltaS * accelerationVector.y;
+function moveTo(deltaS, obj, wantedPos, speed) {
 
-  if (right) {
-    if (obj.x + xDistance < wantedPos.x) {
-      obj.x = obj.x + xDistance;
-    } else {
-      obj.x = wantedPos.x;
-    }
-  } else {
-    if (obj.x - xDistance > wantedPos.x) {
-      obj.x = obj.x - xDistance;
-    } else {
-      obj.x = wantedPos.x;
-    }
-  }
+  var pouet = twoPointDistance(obj, wantedPos);
 
-  if (down) {
-    if (obj.y + yDistance < wantedPos.y) {
-      obj.y = obj.y + yDistance;
-    } else {
-      obj.y = wantedPos.y;
-    }
-  } else {
-    if (obj.y - yDistance > wantedPos.y) {
-      obj.y = obj.y - yDistance;
-    } else {
-      obj.y = wantedPos.y;
-    }
+  var distance = Math.min(deltaS * speed, pouet.distance);
+
+  obj.x += pouet.xDistance / pouet.distance * distance;
+  obj.y += pouet.yDistance / pouet.distance * distance;
+}
+
+function twoPointDistance(pointA, pointB) {
+  var xDistance = pointB.x - pointA.x;
+  var yDistance = pointB.y - pointA.y;
+
+  return {
+    xDistance: xDistance,
+    yDistance: yDistance,
+    distance: Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2))
   }
 }

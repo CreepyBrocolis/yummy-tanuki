@@ -4,11 +4,8 @@ function Grapple(stage, img) {
   grapple.regY = img.height / 2;
   stage.addChild(grapple);
 
-  var speed = 200;
-  var accelerationVector = {x: speed, y: speed};
+  var speed = 1200;
   var wantedPos = {x: grapple.x, y: grapple.y};
-  var right = true,
-    down = true;
 
   var grappleTo = function (x, y, fromX, fromY) {
     grapple.x = fromX;
@@ -20,16 +17,11 @@ function Grapple(stage, img) {
     var xDistance = wantedPos.x - grapple.x;
     var yDistance = wantedPos.y - grapple.y;
 
-    right = xDistance > 0;
-    down = yDistance > 0;
-
-    accelerationVector.x = speed * Math.abs(xDistance / yDistance);
-
     grapple.rotation = -radToDeg * Math.atan2(xDistance, yDistance);
   };
 
   var tick = function (deltaS) {
-    moveTo(deltaS, accelerationVector, right, down, grapple, wantedPos);
+    moveTo(deltaS, grapple, wantedPos, speed);
 
     if (grapple.x === wantedPos.x && grapple.y === wantedPos.y) {
       dispatcher.dispatchEvent("GRAPPLE_OK");
