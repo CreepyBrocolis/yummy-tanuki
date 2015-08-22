@@ -52,12 +52,14 @@ function init() {
     {src: "ground.png", id: "ground"},
     {src: "hills.png", id: "hills"},
     {src: "buildings.png", id: "buildings"},
-    {src: "sky.png", id: "sky"}
+    {src: "sky.png", id: "sky"},
+    {src: "grapple-head.png", id: "grapple"},
+    {src: "broco.png", id: "broco"}
   ];
 
-  for (var i = 0; i < 24; ++i) {
-    manifest.push({src: "testAnim/testAnim.00" + (i < 10 ? "0" : "") + i + ".png", id: "tuxAnim" + i});
-  }
+  //for (var i = 0; i < 24; ++i) {
+  //  manifest.push({src: "testAnim/testAnim.00" + (i < 10 ? "0" : "") + i + ".png", id: "tuxAnim" + i});
+  //}
 
   loader = new createjs.LoadQueue(false);
   loader.addEventListener("progress", handleProgress);
@@ -76,6 +78,8 @@ function handleComplete(event) {
   var skyImg = loader.getResult("sky");
   var buildingImg = loader.getResult("buildings");
   var hillImg = loader.getResult("hills");
+  var grappleImg = loader.getResult("grapple");
+  var brocoImg = loader.getResult("broco");
 
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
@@ -85,7 +89,6 @@ function handleComplete(event) {
 
   buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 10);
 
-
   hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 25);
 
   var ground = new createjs.Shape();
@@ -93,6 +96,15 @@ function handleComplete(event) {
   ground.tileW = groundImg.width;
   ground.y = height - groundImg.height;
   stage.addChild(ground);
+
+  var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
+  spriteSheetBuilder.addFrame(new createjs.Bitmap(brocoImg));
+  spriteSheetBuilder.addFrame(new createjs.Bitmap(brocoImg));
+  spriteSheetBuilder.addAnimation("stand", [0, 1]);
+  var spriteSheet = spriteSheetBuilder.build();
+
+  brocoli = Brocoli(stage, spriteSheet, grappleImg);
+  brocoli.setY(height - groundImg.height);
 
   //var tuxSpriteImgs = [];
   //for (var i = 0; i < 24; ++i) {
@@ -106,10 +118,8 @@ function handleComplete(event) {
   //
   //spriteSheetBuilder.addAnimation("stand", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
   //var spriteSheet = spriteSheetBuilder.build();
-  //
-  //var brocoli = Brocoli(spriteSheet);
-  //stage.addChild(brocoli);
-  //stage.addEventListener("click", brocoli.grapple);
+
+  stage.addEventListener("click", brocoli.grapple);
   //dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
   //dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
   //dispatcher.addEventListener("stopMove", brocoli.stopMove);
@@ -138,7 +148,7 @@ function tick(event) {
   hill.tick(deltaS);
   buildings.tick(deltaS);
   buildings2.tick(deltaS);
-  //brocoli.tick(deltaS);
+  brocoli.tick(deltaS);
 
   stage.update(event);
 }

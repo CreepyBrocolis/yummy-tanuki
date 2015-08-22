@@ -9,7 +9,7 @@ function ParallaxeObject(container, width, sprite, position, movementSpeed) {
 
   function move(sprite, deltaS) {
     sprite.x = (sprite.x - deltaS * movementSpeed);
-    if (sprite.x + sprite.image.width * sprite.scaleX <= 2) {
+    if (sprite.x + sprite.image.width <= 0) {
       sprite.x = width;
     }
   }
