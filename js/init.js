@@ -137,6 +137,7 @@ function tick(event) {
   hill.tick(deltaS);
   buildings.tick(deltaS);
   buildings2.tick(deltaS);
+  //brocoli.tick(deltaS);
 
   stage.update(event);
 }
