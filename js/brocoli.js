@@ -15,7 +15,7 @@ function Brocoli(spriteSheet) {
 
   brocoli.tick = function (deltaS) {
     brocoli.move(deltaS);
-  }
+  };
 
   brocoli.grapple = function (event) {
     console.log(event.stageX + " " + event.stageY);
