@@ -15,6 +15,8 @@ var brocoli,
   hill,
   buildings, buildings2;
 
+var dispatcher = EventDispatcher();
+
 function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);
@@ -105,6 +107,10 @@ function handleComplete(event) {
   //
   //var brocoli = Brocoli(spriteSheet);
   //stage.addChild(brocoli);
+  //stage.addEventListener("click", brocoli.grapple);
+  //dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
+  //dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
+  //dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
