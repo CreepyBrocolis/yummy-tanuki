@@ -66,6 +66,7 @@ function init() {
 
 function handleProgress(event) {
   bar.scaleX = event.loaded * loaderWidth;
+  stage.update();
 }
 
 function handleComplete(event) {
@@ -107,25 +108,10 @@ function handleComplete(event) {
   //
   //var brocoli = Brocoli(spriteSheet);
   //stage.addChild(brocoli);
-  var tuxSpriteImgs = [];
-  for (var i = 0; i < 24; ++i) {
-    tuxSpriteImgs.push(loader.getResult("tuxAnim" + i));
-  }
-
-  var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
-  tuxSpriteImgs.forEach(function (img) {
-    spriteSheetBuilder.addFrame(new createjs.Bitmap(img));
-  });
-
-  spriteSheetBuilder.addAnimation("stand", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
-  var spriteSheet = spriteSheetBuilder.build();
-
-  var brocoli = Brocoli(spriteSheet);
-  stage.addChild(brocoli);
-  stage.addEventListener("click", brocoli.grapple);
-  dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
-  dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
-  dispatcher.addEventListener("stopMove", brocoli.stopMove);
+  //stage.addEventListener("click", brocoli.grapple);
+  //dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
+  //dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
+  //dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
