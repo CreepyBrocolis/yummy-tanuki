@@ -13,11 +13,11 @@ function ParallaxeObject(container, width, sprite, position, movementSpeed) {
 
   function move(sprite, deltaS) {
     sprite.xPosition = sprite.xPosition - deltaS * movementSpeed;
-    sprite.x = sprite.xPosition - camera.xPosition;
-    sprite.y = sprite.yPosition - camera.yPosition;
-    if (sprite.x + sprite.image.width * sprite.scaleX <= 2) {
+    if (sprite.x + sprite.image.width <= 0) {
       sprite.x = width;
     }
+    sprite.x = sprite.xPosition - camera.xPosition;
+    sprite.y = sprite.yPosition - camera.yPosition;
   }
 
   var tick = function (deltaS) {
