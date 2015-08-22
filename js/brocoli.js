@@ -43,6 +43,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   function move(deltaS) {
     //  // Animate spritesheet with good animation
     //  // Move the item on the right
+
     if (movingToGrapple) {
       // Deactivate any movement
       isMoving = false;
@@ -53,10 +54,10 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
         grapple.toggleHide();
       }
     }
-
-    if (!movingToGrapple && isMoving) {
+    else if (isMoving) {
       var speed = (faceRight) ? movementSpeed : -movementSpeed;
       brocoli.x = (brocoli.x + deltaS * speed);
+      //brocoli.y -= 1;
     }
   }
 
@@ -76,15 +77,20 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   };
 
   var startMoveRight = function () {
-    isMoving = true;
-    faceRight = true;
-    brocoli.gotoAndPlay("jump");
+    if ((isMoving && !faceRight) || !isMoving) {
+      console.log("test");
+      isMoving = true;
+      faceRight = true;
+      brocoli.gotoAndPlay("jump");
+    }
   };
 
   var startMoveLeft = function () {
-    isMoving = true;
-    faceRight = false;
-    brocoli.gotoAndPlay("jump");
+    if ((isMoving && faceRight) || !isMoving) {
+      isMoving = true;
+      faceRight = false;
+      brocoli.gotoAndPlay("jump");
+    }
   };
 
   var stopMove = function () {

@@ -65,7 +65,7 @@ function init() {
     manifest.push({src: "jump/broco_jump.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
   }
   for (i = 0; i < 30; ++i) {
-    manifest.push({src: "land/arm.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
+    manifest.push({src: "land/arm.00" + (i < 10 ? "0" : "") + i + ".png", id: "land" + i});
   }
 
   loader = new createjs.LoadQueue(false);
