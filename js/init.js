@@ -23,6 +23,8 @@ var dispatcher = EventDispatcher();
 
 var camera = Camera();
 
+var floorHeight;
+
 function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);
@@ -90,6 +92,8 @@ function handleComplete(event) {
   var buildingImg = loader.getResult("buildings");
   var hillImg = loader.getResult("hills");
   var grappleImg = loader.getResult("grapple");
+
+  var floorHeight = height - groundImg.height;
 
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
