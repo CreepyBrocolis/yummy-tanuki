@@ -3,14 +3,22 @@ function Brocoli(spriteSheet) {
   brocoli.isMoving = false;
   brocoli.faceRight = true;
   brocoli.movementSpeed = 4;
+  brocoli.xPosition = brocoli.x;
+  brocoli.yPosition = brocoli.y;
 
   brocoli.move = function (deltaS) {
   //  // Animate spritesheet with good animation
   //  // Move the item on the right
+    var speed;
     if (brocoli.isMoving) {
-      var speed = (brocoli.faceRight) ? brocoli.movementSpeed : - brocoli.movementSpeed;
-      brocoli.x = (brocoli.x + deltaS * speed);
+      speed = (brocoli.faceRight) ? brocoli.movementSpeed : - brocoli.movementSpeed;
     }
+    else {
+      speed = 0;
+    }
+    brocoli.xPosition += deltaS * speed;
+    brocoli.x = brocoli.xPosition - camera.xPosition;
+    brocoli.y = brocoli.yPosition - camera.yPosition;
   };
 
   brocoli.tick = function (deltaS) {

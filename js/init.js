@@ -17,6 +17,8 @@ var brocoli,
 
 var dispatcher = EventDispatcher();
 
+var camera = Camera();
+
 function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);

@@ -2,11 +2,15 @@ function Human (spritesheet) {
     var human = new createjs.Sprite(spritesheet, "move")
     human.movementSpeed = -4;
     human.isAlive = true;
+    human.xPosition = human.x;
+    human.yPosition = human.y;
 
 
     human.move = function (deltaS) {
         if (human.isMoving) {
-            human.x = human.x + deltaS * human.movementSpeed;
+            human.xPosition += deltaS * human.movementSpeed;
+            human.x = human.xPosition - camera.xPosition;
+            human.y = human.yPosition - camera.yPosition;
         }
     };
 
