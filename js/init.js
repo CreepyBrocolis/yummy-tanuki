@@ -66,6 +66,7 @@ function init() {
 
 function handleProgress(event) {
   bar.scaleX = event.loaded * loaderWidth;
+  stage.update();
 }
 
 function handleComplete(event) {
