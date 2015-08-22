@@ -1,13 +1,12 @@
-function Camera () {
-    var camera = {};
-    camera.xPosition = 0;
-    camera.yPosition = 0;
+function Camera() {
+  var camera = {
+    xPosition: 0,
+    yPosition: 0,
+    setPosition: function (x, y) {
+      camera.xPosition = x;
+      camera.yPosition = y;
+    }
+  };
 
-    camera.setPosition = function (x, y) {
-        camera.xPosition = x;
-        camera.yPosition = y;
-    };
-
-    return camera;
-
+  return camera;
 }

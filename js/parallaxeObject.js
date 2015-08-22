@@ -1,23 +1,22 @@
 function ParallaxeObject(container, width, sprite, position, movementSpeed) {
   var sprite1 = new createjs.Bitmap(sprite);
-  sprite1.xPosition = 0;
-  sprite1.yPosition = position;
-  sprite1.x = sprite1.xPosition - camera.xPosition;
-  sprite1.y = sprite1.yPosition - camera.yPosition;
+  sprite1.y = position;
 
   var sprite2 = sprite1.clone();
-  sprite2.xPosition = width;
-  sprite2.x = sprite2.xPosition - camera.xPosition;
+  sprite2.x = width;
+
+  console.log(sprite2);
 
   container.addChild(sprite1, sprite2);
 
   function move(sprite, deltaS) {
-    sprite.xPosition = sprite.xPosition - deltaS * movementSpeed;
+    sprite.x = sprite.x - deltaS * movementSpeed;
     if (sprite.x + sprite.image.width <= 0) {
       sprite.x = width;
     }
-    sprite.x = sprite.xPosition - camera.xPosition;
-    sprite.y = sprite.yPosition - camera.yPosition;
+
+    sprite.x = sprite.x + camera.xPosition;
+    sprite.y = sprite.y + camera.yPosition;
   }
 
   var tick = function (deltaS) {

@@ -86,7 +86,6 @@ function handleComplete(event) {
 
   buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 10);
 
-
   hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 25);
 
   var ground = new createjs.Shape();
@@ -94,26 +93,6 @@ function handleComplete(event) {
   ground.tileW = groundImg.width;
   ground.y = height - groundImg.height;
   stage.addChild(ground);
-
-  //var tuxSpriteImgs = [];
-  //for (var i = 0; i < 24; ++i) {
-  //  tuxSpriteImgs.push(loader.getResult("tuxAnim" + i));
-  //}
-  //
-  //var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
-  //tuxSpriteImgs.forEach(function (img) {
-  //  spriteSheetBuilder.addFrame(new createjs.Bitmap(img));
-  //});
-  //
-  //spriteSheetBuilder.addAnimation("stand", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
-  //var spriteSheet = spriteSheetBuilder.build();
-  //
-  //var brocoli = Brocoli(spriteSheet);
-  //stage.addChild(brocoli);
-  //stage.addEventListener("click", brocoli.grapple);
-  //dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
-  //dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
-  //dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
@@ -125,21 +104,10 @@ function handleComplete(event) {
 
 function tick(event) {
   var deltaS = event.delta / 1000;
-  //var position = grant.x + 150 * deltaS;
-  //
-  //var grantW = grant.getBounds().width * grant.scaleX;
-  //grant.x = (position >= w + grantW) ? -grantW : position;
-  //
-  //ground.x = (ground.x - deltaS * 150) % ground.tileW;
-  //hill.x = (hill.x - deltaS * 30);
-  //if (hill.x + hill.image.width * hill.scaleX <= 0) {
-  //  hill.x = w;
-  //}
 
   hill.tick(deltaS);
   buildings.tick(deltaS);
   buildings2.tick(deltaS);
-  //brocoli.tick(deltaS);
 
   stage.update(event);
 }

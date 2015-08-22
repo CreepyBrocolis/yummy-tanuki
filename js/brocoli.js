@@ -35,6 +35,7 @@ function Brocoli(spriteSheet) {
     brocoli.isMoving = true;
     brocoli.faceRight = true;
     brocoli.gotoAndPlay("moveRight");
+    camera.setPosition(camera.xPosition + 1, camera.yPosition);
   };
 
   brocoli.startMoveLeft = function () {
