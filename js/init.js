@@ -147,7 +147,6 @@ function handleComplete(event) {
   stage.addEventListener("click", brocoli.grapple);
   dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
   dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
-  dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
