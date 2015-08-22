@@ -21,4 +21,6 @@ function Human (spritesheet) {
         else
             human.die();
     }
+
+    return human;
 }
