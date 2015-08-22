@@ -126,7 +126,7 @@ function handleComplete(event) {
   spriteSheetBuilder.addAnimation("land", spriteFrames, "jump");
 
   spriteFrames = [];
-  for (i + 0; i < 30; ++i) {
+  for (i = 0; i < 30; ++i) {
     spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("land" + i)));
     spriteFrames.push(90 + i);
   }
