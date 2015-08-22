@@ -13,17 +13,18 @@ function ParallaxeObject(container, width, sprite, position, movementSpeed) {
   function move(sprite, distance) {
     sprite.x = sprite.x - distance * movementSpeed;
 
+    var value = sprite.x + width;
+
     if (sprite.x + width <= 0) {
-      sprite.x = width;
+      sprite.x = width + value;
     }
 
     if (sprite.x > width) {
-      sprite.x = -width;
+      sprite.x = (sprite.x - width) - width;
     }
   }
 
-  var tick = function (distance, right) {
-    distance = right ? distance : -distance;
+  var tick = function (distance) {
     move(sprite1, distance);
     move(sprite2, distance);
   };

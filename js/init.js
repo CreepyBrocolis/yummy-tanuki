@@ -93,17 +93,17 @@ function handleComplete(event) {
   var hillImg = loader.getResult("hills");
   var grappleImg = loader.getResult("grapple");
 
-  var floorHeight = height - groundImg.height;
+  floorHeight = height - groundImg.height;
 
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
 
-  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 2);
+  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 0.5);
   buildings.setAlpha(0.3);
 
-  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 4);
+  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 1);
 
-  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 8);
+  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 2);
 
   var ground = new createjs.Shape();
   ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
@@ -124,14 +124,14 @@ function handleComplete(event) {
     spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("jump" + i)));
     spriteFrames.push(30 + i);
   }
-  spriteSheetBuilder.addAnimation("jump", spriteFrames, "land");
+  spriteSheetBuilder.addAnimation("jump", spriteFrames, false);
 
   spriteFrames = [];
   for (i = 0; i < 30; ++i) {
     spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("land" + i)));
     spriteFrames.push(60 + i);
   }
-  spriteSheetBuilder.addAnimation("land", spriteFrames, "jump");
+  spriteSheetBuilder.addAnimation("land", spriteFrames, false);
 
   spriteFrames = [];
   for (i = 0; i < 30; ++i) {
@@ -163,9 +163,9 @@ function tick(event) {
   brocoli.tick(deltaS);
 
   if (brocoli.isMoving()) {
-    hill.tick(brocoli.distance(), brocoli.direction());
-    buildings.tick(brocoli.distance(), brocoli.direction());
-    buildings2.tick(brocoli.distance(), brocoli.direction());
+    hill.tick(brocoli.distance());
+    buildings.tick(brocoli.distance());
+    buildings2.tick(brocoli.distance());
   }
 
   stage.update(event);

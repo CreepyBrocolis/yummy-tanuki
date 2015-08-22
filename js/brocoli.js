@@ -3,21 +3,12 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   brocoli.addEventListener("animationend", animationEnded);
 
-  function animationEnded (evt){
-    if(evt.name == "land") {
-      //still moving, jump again
-      if(movement.x != 0.0) {
-        jump();
-      }
-    }
-  }
-
   brocoli.regX = 60;
   brocoli.regY = 60;
   brocoli.y = initialPos - 60;
   brocoli.x = 60;
-  brocoli.jumpStart = 0;
   brocoli.yStart = brocoli.y;
+  brocoli.lastDistanceTraveled = 0;
 
   stage.addChild(brocoli);
 
@@ -28,9 +19,10 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   var isMoving = false;
   var faceRight = true;
   var movementSpeed = 60;
-  var jumpStrength = 100;
+  var jumpStrength = 20;
   var grappleSpeed = 800;
   var gravity = 8.0;
+  var jumping = false;
 
   var velocity = {x: 0.0, y: 0.0};
   var movement = {x: 0.0, y: 0.0};
@@ -48,14 +40,20 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     wantedPos.y = grapple.y();
   }
 
-
-//TODO
-//brocoli.lastDistanceTraveled;
-//brocoli.jumpStart
+  function animationEnded (evt){
+    if(evt.name == "land") {
+      //still moving, jump again
+      if(movement.x != 0.0) {
+        jump();
+      }
+    }
+  }
 
   function jump() {
     brocoli.gotoAndPlay("jump");
     velocity.y += jumpStrength;
+    console.log("JMP velocity.y " + velocity.y);
+    jumping = true;
   }
 
   function move(deltaS) {
@@ -73,26 +71,32 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
       }
     } else {
         //player moving
-        if(velocity.y == 0.0 && movement.x != 0.0) {
+        if(!jumping && velocity.y == 0.0 && movement.x != 0.0) {
           jump();
         }
 
         //gravity
-        if(brocoli.y <= floorHeight) { //ground height ?
+        if(!jumping && brocoli.y >= floorHeight - 60) { //ground height ?
           velocity.y = 0.0;
         } else {
           velocity.y -= gravity * deltaS;
         }
 
         brocoli.x += (movement.x + velocity.x) * deltaS;
-        brocoli.x += (movement.y + velocity.y) * deltaS;
+        brocoli.y += (movement.y - velocity.y) * deltaS;
+        brocoli.lastDistanceTraveled = (movement.x + velocity.x) * deltaS;
         //reset horizontal movement (because the key needs to be hold down to move)
-        mouvement.x = 0.0;
+        movement.x = 0.0;
     }
   }
 
   var tick = function (deltaS) {
     move(deltaS);
+    //start land animation when we fall
+    if (velocity.y < 0.0) { //&& jumping //if we don't test jumping -> restart land anim until we reach ground
+      jumping = false;
+      brocoli.gotoAndPlay("land");
+    }
     if (grappling) {
       grapple.tick(deltaS);
     }
@@ -133,9 +137,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     isMoving: function () {
       return movement.x != 0.0 || movingToGrapple;
     },
-    direction: function () {
-      return movement.x >= 0.0;
-    },
+
     distance: function () {
       return brocoli.lastDistanceTraveled;
     }
