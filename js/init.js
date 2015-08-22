@@ -62,10 +62,10 @@ function init() {
     manifest.push({src: "iddle/iddle.00" + (i < 10 ? "0" : "") + i + ".png", id: "idle" + i});
   }
   for (i = 0; i < 30; ++i) {
-    manifest.push({src: "jump/jump.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
+    manifest.push({src: "jump/broco_jump.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
   }
   for (i = 0; i < 30; ++i) {
-    manifest.push({src: "land/land.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
+    manifest.push({src: "land/arm.00" + (i < 10 ? "0" : "") + i + ".png", id: "jump" + i});
   }
 
   loader = new createjs.LoadQueue(false);
@@ -90,12 +90,12 @@ function handleComplete(event) {
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
 
-  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 4);
+  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 0.2);
   buildings.setAlpha(0.3);
 
-  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 10);
+  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 0.4);
 
-  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 25);
+  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 0.8);
 
   var ground = new createjs.Shape();
   ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
@@ -130,6 +130,9 @@ function handleComplete(event) {
   brocoli = Brocoli(stage, spriteSheet, grappleImg, height - groundImg.height);
 
   stage.addEventListener("click", brocoli.grapple);
+  dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
+  dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
+  dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
@@ -142,10 +145,14 @@ function handleComplete(event) {
 function tick(event) {
   var deltaS = event.delta / 1000;
 
-  hill.tick(deltaS);
-  buildings.tick(deltaS);
-  buildings2.tick(deltaS);
   brocoli.tick(deltaS);
+
+  if (brocoli.isMoving()) {
+    var brocoliDistance = deltaS * brocoli.distance();
+    hill.tick(brocoliDistance, brocoli.direction());
+    buildings.tick(brocoliDistance, brocoli.direction());
+    buildings2.tick(brocoliDistance, brocoli.direction());
+  }
 
   stage.update(event);
 }

@@ -12,7 +12,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var isMoving = false;
   var faceRight = true;
-  var movementSpeed = 4;
+  var movementSpeed = 60;
   var grappleSpeed = 300;
 
   var grappling = false,
@@ -34,6 +34,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     var yDistance = wantedPos.y - brocoli.y;
 
     right = xDistance > 0;
+    faceRight = right;
     down = yDistance > 0;
 
     accelerationVector.x = grappleSpeed * Math.abs(xDistance / yDistance);
@@ -70,34 +71,41 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     if (!grappling) {
       grappling = true;
       grapple.toggleHide();
-      grapple.grapple(event.stageX, event.stageY);
+      grapple.grapple(event.stageX, event.stageY, brocoli.x, brocoli.y);
     }
   };
 
-
   var startMoveRight = function () {
-    console.log("startMoveRight");
     isMoving = true;
     faceRight = true;
-    brocoli.gotoAndPlay("moveRight");
-    camera.setPosition(camera.xPosition + 1, camera.yPosition);
+    brocoli.gotoAndPlay("jump");
   };
 
   var startMoveLeft = function () {
-    console.log("startMoveLeft");
     isMoving = true;
     faceRight = false;
-    brocoli.gotoAndPlay("moveLeft");
+    brocoli.gotoAndPlay("jump");
   };
 
   var stopMove = function () {
-    console.log("stopMove");
     isMoving = false;
-    brocoli.gotoAndStop("stand");
+    brocoli.gotoAndPlay("idle");
   };
 
   return {
     tick: tick,
-    grapple: grap
+    grapple: grap,
+    startMoveRight: startMoveRight,
+    startMoveLeft: startMoveLeft,
+    stopMove: stopMove,
+    isMoving: function () {
+      return isMoving || movingToGrapple;
+    },
+    direction: function () {
+      return faceRight;
+    },
+    distance: function () {
+      return accelerationVector.x;
+    }
   };
 }

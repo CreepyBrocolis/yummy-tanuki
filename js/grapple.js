@@ -10,7 +10,9 @@ function Grapple(stage, img) {
   var right = true,
     down = true;
 
-  var grappleTo = function (x, y) {
+  var grappleTo = function (x, y, fromX, fromY) {
+    grapple.x = fromX;
+    grapple.y = fromY;
     // Move the sprite from the current position to the new one
     wantedPos.x = x;
     wantedPos.y = y;
@@ -41,8 +43,8 @@ function Grapple(stage, img) {
     },
     grapple: grappleTo,
     tick: tick,
-    toggleHide: function() {
-      grapple.visible = ! grapple.visible;
+    toggleHide: function () {
+      grapple.visible = !grapple.visible;
     }
   }
 }
