@@ -11,6 +11,12 @@ var canvas;
 var width,
   height;
 
+function BrocoliDispatcher () {
+}
+createjs.EventDispatcher.initialize(BrocoliDispatcher.prototype);
+var dispatcher = new BrocoliDispatcher();
+
+
 function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);
@@ -87,6 +93,10 @@ function handleComplete(event) {
 
   var brocoli = Brocoli(spriteSheet);
   stage.addChild(brocoli);
+  stage.addEventListener("click", brocoli.grapple);
+  brocoli.addEventListener("startMoveRight", brocoli.startMoveRight);
+  brocoli.addEventListener("startMoveLeft", brocoli.startMoveLeft);
+  brocoli.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
