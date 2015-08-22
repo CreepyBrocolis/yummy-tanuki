@@ -20,7 +20,8 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var grappling = false,
     movingToGrapple = false,
-    wantedPos = {x: movementSpeed, y: movementSpeed};
+    wantedPos = {x: movementSpeed, y: movementSpeed},
+    lastDistanceTraveled = 0;
 
   function moveToGrapple() {
     // Move broco to the grapple
@@ -44,12 +45,11 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
         movingToGrapple = false;
         grapple.toggleHide();
       }
-    }
-    else if (isMoving) {
+    } else if (isMoving) {
       var speed = (faceRight) ? movementSpeed : -movementSpeed;
-      brocoli.x = (brocoli.x + deltaS * speed);
+      brocoli.lastDistanceTraveled = deltaS * speed;
+      brocoli.x += brocoli.lastDistanceTraveled;
       brocoli.jumpStart += deltaS;
-      console.log(brocoli.jumpStart);
       if (brocoli.jumpStart >= 0.5)
         brocoli.y += 1;
       else
@@ -114,7 +114,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
       return faceRight;
     },
     distance: function () {
-      return wantedPos.x - brocoli.x;
+      return brocoli.lastDistanceTraveled;
     }
   };
 }

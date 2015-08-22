@@ -94,12 +94,12 @@ function handleComplete(event) {
   var sky = new createjs.Bitmap(skyImg);
   stage.addChild(sky);
 
-  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 0.2);
+  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 8);
   buildings.setAlpha(0.3);
 
-  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 0.4);
+  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 16);
 
-  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 0.8);
+  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 32);
 
   var ground = new createjs.Shape();
   ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
@@ -130,7 +130,7 @@ function handleComplete(event) {
   spriteSheetBuilder.addAnimation("land", spriteFrames, "jump");
 
   spriteFrames = [];
-  for (i + 0; i < 30; ++i) {
+  for (i = 0; i < 30; ++i) {
     spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("land" + i)));
     spriteFrames.push(90 + i);
   }
