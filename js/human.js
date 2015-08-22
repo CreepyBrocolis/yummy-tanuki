@@ -7,7 +7,7 @@ function Human (spritesheet) {
 
 
     human.move = function (deltaS) {
-        if (human.isMoving) {
+        if (human.isAlive) {
             human.xPosition += deltaS * human.movementSpeed;
             human.x = human.xPosition - camera.xPosition;
             human.y = human.yPosition - camera.yPosition;
