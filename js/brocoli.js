@@ -41,8 +41,8 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   }
 
   function move(deltaS) {
-    //  // Animate spritesheet with good animation
-    //  // Move the item on the right
+    // Animate spritesheet with good animation
+    // Move the item on the right
     if (movingToGrapple) {
       // Deactivate any movement
       isMoving = false;

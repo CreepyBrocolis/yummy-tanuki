@@ -24,6 +24,8 @@ function Grapple(stage, img) {
     down = yDistance > 0;
 
     accelerationVector.x = speed * Math.abs(xDistance / yDistance);
+
+    grapple.rotation = -radToDeg * Math.atan2(xDistance, yDistance);
   };
 
   var tick = function (deltaS) {
