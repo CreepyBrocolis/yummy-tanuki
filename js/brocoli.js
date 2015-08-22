@@ -51,9 +51,9 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
       brocoli.x += brocoli.lastDistanceTraveled;
       brocoli.jumpStart += deltaS;
       if (brocoli.jumpStart >= 0.5)
-        brocoli.y += 1;
+        brocoli.y += 50 * deltaS;
       else
-        brocoli.y -= 1;
+        brocoli.y -= 50 * deltaS;
       if (brocoli.jumpStart >= 1) {
         brocoli.jumpStart = 0;
         brocoli.y = brocoli.yStart;
