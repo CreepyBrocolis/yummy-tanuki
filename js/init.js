@@ -21,6 +21,7 @@ function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);
   stage.enableMouseOver(10);
+
   width = stage.canvas.width;
   height = stage.canvas.height;
 
@@ -34,7 +35,7 @@ function init() {
   imageContainer.y = 0;
   stage.addChild(imageContainer);
 
-  loaderWidth = 250;
+  loaderWidth = 300;
 
   var bgBar = new createjs.Shape();
   var padding = 3;
