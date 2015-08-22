@@ -12,7 +12,8 @@ var width,
   height;
 
 var brocoli,
-  hill;
+  hill,
+  buildings, buildings2;
 
 function init() {
   canvas = document.getElementById("myCanvas");
@@ -47,7 +48,8 @@ function init() {
   var manifest = [
     {src: "ground.png", id: "ground"},
     {src: "hills.png", id: "hills"},
-    {src: "buildings.png", id: "buildings"}
+    {src: "buildings.png", id: "buildings"},
+    {src: "sky.png", id: "sky"}
   ];
 
   for (var i = 0; i < 24; ++i) {
@@ -67,17 +69,26 @@ function handleProgress(event) {
 function handleComplete(event) {
 
   var groundImg = loader.getResult("ground");
+  var skyImg = loader.getResult("sky");
+  var buildingImg = loader.getResult("buildings");
+  var hillImg = loader.getResult("hills");
+
+  var sky = new createjs.Bitmap(skyImg);
+  stage.addChild(sky);
+
+  buildings = ParallaxeObject(stage, width, buildingImg, 20 - groundImg.height, 4);
+  buildings.setAlpha(0.3);
+
+  buildings2 = ParallaxeObject(stage, width, buildingImg, -groundImg.height, 10);
+
+
+  hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 25);
+
   var ground = new createjs.Shape();
   ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
   ground.tileW = groundImg.width;
   ground.y = height - groundImg.height;
-
-  var hillImg = loader.getResult("hills");
-  hill = ParallaxeObject(hillImg, width, height - groundImg.height - hillImg.height, 45);
-
-  var buildings = new createjs.Bitmap(loader.getResult("buildings"));
-
-  stage.addChild(buildings, hill.bitmap1, hill.bitmap2, ground);
+  stage.addChild(ground);
 
   //var tuxSpriteImgs = [];
   //for (var i = 0; i < 24; ++i) {
@@ -117,7 +128,8 @@ function tick(event) {
   //}
 
   hill.tick(deltaS);
-
+  buildings.tick(deltaS);
+  buildings2.tick(deltaS);
 
   stage.update(event);
 }
