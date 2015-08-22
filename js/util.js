@@ -4,10 +4,11 @@ function moveTo(deltaS, obj, wantedPos, speed) {
 
   var distance = Math.min(deltaS * speed, pouet.distance);
 
-  obj.x += pouet.xDistance / pouet.distance * distance;
+  obj.lastDistanceTraveled = pouet.xDistance / pouet.distance * distance;
+
+  obj.x += obj.lastDistanceTraveled;
   obj.y += pouet.yDistance / pouet.distance * distance;
 
-  obj.lastDistanceTraveled = pouet.xDistance / pouet.distance * distance;
 }
 
 function twoPointDistance(pointA, pointB) {

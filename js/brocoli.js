@@ -6,6 +6,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   brocoli.x = 60;
   brocoli.jumpStart = 0;
   brocoli.yStart = brocoli.y;
+  brocoli.lastDistanceTraveled = 0;
 
   stage.addChild(brocoli);
 
@@ -108,9 +109,6 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     stopMove: stopMove,
     isMoving: function () {
       return isMoving || movingToGrapple;
-    },
-    direction: function () {
-      return faceRight;
     },
     distance: function () {
       return brocoli.lastDistanceTraveled;
