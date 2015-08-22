@@ -56,7 +56,6 @@ function handleKeyDown(e) {
         case KEYCODE_DOWN: dwHeld = true; break;
         case KEYCODE_C:     cAppuyer = true; break;
         case KEYCODE_O:     oAppuyer = true; break;
-        case KEYCODE_R:     rAppuyer = true; break;
         case KEYCODE_SPACE: spaceAppuyer = true; break;
     }
 }
@@ -82,7 +81,6 @@ function handleKeyUp(e) {
         case KEYCODE_DOWN: dwHeld = false; break;
         case KEYCODE_C:     cAppuyer = false; break;
         case KEYCODE_O:     oAppuyer = false; break;
-        case KEYCODE_R:     rAppuyer = false; break;
         case KEYCODE_SPACE: spaceAppuyer = false; break;
     }
 }
