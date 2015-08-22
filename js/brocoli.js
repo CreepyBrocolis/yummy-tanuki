@@ -18,10 +18,10 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var isMoving = false;
   var faceRight = true;
-  var movementSpeed = 60;
-  var jumpStrength = 20;
+  var movementSpeed = 100;
+  var jumpStrength = 300;
   var grappleSpeed = 800;
-  var gravity = 8.0;
+  var gravity = 600.0;
   var jumping = false;
 
   var velocity = {x: 0.0, y: 0.0};
@@ -41,7 +41,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   }
 
   function animationEnded (evt){
-    if(evt.name == "land") {
+    if(evt.name == "landAndIdle") {
       //still moving, jump again
       if(movement.x != 0.0) {
         jump();
@@ -95,7 +95,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     //start land animation when we fall
     if (velocity.y < 0.0) { //&& jumping //if we don't test jumping -> restart land anim until we reach ground
       jumping = false;
-      brocoli.gotoAndPlay("land");
+      brocoli.gotoAndPlay("landAndIdle");
     }
     if (grappling) {
       grapple.tick(deltaS);
