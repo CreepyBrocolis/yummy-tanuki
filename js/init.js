@@ -125,6 +125,13 @@ function handleComplete(event) {
   }
   spriteSheetBuilder.addAnimation("land", spriteFrames, "jump");
 
+  spriteFrames = [];
+  for (i + 0; i < 30; ++i) {
+    spriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("land" + i)));
+    spriteFrames.push(90 + i);
+  }
+  spriteSheetBuilder.addAnimation("landAndIdle", spriteFrames, "idle");
+
   var spriteSheet = spriteSheetBuilder.build();
 
   brocoli = Brocoli(stage, spriteSheet, grappleImg, height - groundImg.height);
