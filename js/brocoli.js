@@ -12,20 +12,20 @@ function Brocoli(spriteSheet) {
   };
 
   brocoli.grapple = function (event) {
-    alert(event.stageX + " " + event.stageY);
+    console.log(event.stageX + " " + event.stageY);
   };
 
 
   brocoli.startMoveRight = function () {
-    alert("startMoveRight");
+    console.log("startMoveRight");
   };
 
   brocoli.startMoveLeft = function () {
-    alert("startMoveLeft");
+    console.log("startMoveLeft");
   };
 
   brocoli.stopMove = function () {
-    alert("stopMove");
+    console.log("stopMove");
   };
 
 
