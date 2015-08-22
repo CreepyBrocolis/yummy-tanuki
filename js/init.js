@@ -17,6 +17,8 @@ var brocoli,
 
 var dispatcher = EventDispatcher();
 
+var camera = Camera();
+
 function init() {
   canvas = document.getElementById("myCanvas");
   stage = new createjs.Stage(canvas);
@@ -106,23 +108,7 @@ function handleComplete(event) {
   brocoli = Brocoli(stage, spriteSheet, grappleImg);
   brocoli.setY(height - groundImg.height);
 
-  //var tuxSpriteImgs = [];
-  //for (var i = 0; i < 24; ++i) {
-  //  tuxSpriteImgs.push(loader.getResult("tuxAnim" + i));
-  //}
-  //
-  //var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
-  //tuxSpriteImgs.forEach(function (img) {
-  //  spriteSheetBuilder.addFrame(new createjs.Bitmap(img));
-  //});
-  //
-  //spriteSheetBuilder.addAnimation("stand", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
-  //var spriteSheet = spriteSheetBuilder.build();
-
   stage.addEventListener("click", brocoli.grapple);
-  //dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
-  //dispatcher.addEventListener("startMoveLeft", brocoli.startMoveLeft);
-  //dispatcher.addEventListener("stopMove", brocoli.stopMove);
 
   loaderBar.visible = false;
   stage.update();
@@ -134,16 +120,6 @@ function handleComplete(event) {
 
 function tick(event) {
   var deltaS = event.delta / 1000;
-  //var position = grant.x + 150 * deltaS;
-  //
-  //var grantW = grant.getBounds().width * grant.scaleX;
-  //grant.x = (position >= w + grantW) ? -grantW : position;
-  //
-  //ground.x = (ground.x - deltaS * 150) % ground.tileW;
-  //hill.x = (hill.x - deltaS * 30);
-  //if (hill.x + hill.image.width * hill.scaleX <= 0) {
-  //  hill.x = w;
-  //}
 
   hill.tick(deltaS);
   buildings.tick(deltaS);
