@@ -11,11 +11,8 @@ var canvas;
 var width,
   height;
 
-function BrocoliDispatcher () {
-}
-createjs.EventDispatcher.initialize(BrocoliDispatcher.prototype);
-var dispatcher = new BrocoliDispatcher();
 
+var dispatcher = new createjs.EventDispatcher();
 
 function init() {
   canvas = document.getElementById("myCanvas");
