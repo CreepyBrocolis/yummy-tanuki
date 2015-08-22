@@ -4,6 +4,9 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   brocoli.regY = 60;
   brocoli.y = initialPos - 60;
   brocoli.x = 60;
+  brocoli.jumpStart = 0;
+  brocoli.yStart = brocoli.y;
+
   stage.addChild(brocoli);
 
   var grapple = Grapple(stage, img);
@@ -45,7 +48,16 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
     else if (isMoving) {
       var speed = (faceRight) ? movementSpeed : -movementSpeed;
       brocoli.x = (brocoli.x + deltaS * speed);
-      //brocoli.y -= 1;
+      brocoli.jumpStart += deltaS;
+      console.log(brocoli.jumpStart);
+      if (brocoli.jumpStart >= 0.5)
+        brocoli.y += 1;
+      else
+        brocoli.y -= 1;
+      if (brocoli.jumpStart >= 1) {
+        brocoli.jumpStart = 0;
+        brocoli.y = brocoli.yStart;
+      }
     }
   }
 
@@ -66,7 +78,6 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var startMoveRight = function () {
     if ((isMoving && !faceRight) || !isMoving) {
-      console.log("test");
       isMoving = true;
       faceRight = true;
       brocoli.gotoAndPlay("jump");
@@ -83,7 +94,11 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var stopMove = function () {
     isMoving = false;
-    brocoli.gotoAndPlay("idle");
+    brocoli.gotoAndPlay("landAndIdle");
+    if (brocoli.jumpStart > 0) {
+      brocoli.jumpStart = 0;
+      brocoli.y = brocoli.yStart;
+    }
   };
 
   return {
