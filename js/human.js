@@ -1,13 +1,13 @@
-function Human (stage, bodySpritesheet, legSpriteSheet, initialPosition) {
-    var humanBody = new createjs.Sprite(bodySpritesheet, "idle");
+function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
+    var humanBody = new createjs.Sprite(bodySpritesheet, "die");
 
 
     var humanLegs = new createjs.Sprite(legSpriteSheet, "walk");
 
 
 
-    var xPosition = initialPosition.x;
-    var yPosition = initialPosition.y - humanBody.height - humanLegs.height;
+    var xPosition = x;
+    var yPosition = y - humanBody.height - humanLegs.height;
 
 
     humanLegs.x = xPosition;

@@ -21,6 +21,7 @@ var brocoli,
   ground;
 
 var grappable = [];
+var humans = [];
 
 var dispatcher = EventDispatcher();
 
@@ -80,8 +81,13 @@ function init() {
   for (i = 0; i < 30; ++i) {
     manifest.push({src: "land/arm.00" + (i < 10 ? "0" : "") + i + ".png", id: "land" + i});
   }
+
+  // human sprites
   for (i = 0; i < 30; ++i) {
     manifest.push({src: "leg_walk/leg_walk.00" + (i < 10 ? "0" : "") + i + ".png", id: "walk" + i});
+  }
+  for (i = 0; i < 30; ++i) {
+    manifest.push({src: "top_death/top_death.00" + (i < 10 ? "0" : "") + i + ".png", id: "topDie" + i});
   }
 
   loader = new createjs.LoadQueue(false);
@@ -156,10 +162,10 @@ function handleComplete(event) {
   var bodySpriteSheetBuilder = new createjs.SpriteSheetBuilder();
   spriteFrames = [];
   for (i = 0; i < 30; ++i) {
-    bodySpriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("idle" + i)));
+    bodySpriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("topDie" + i)));
     spriteFrames.push(i);
   }
-  bodySpriteSheetBuilder.addAnimation("idle", spriteFrames);
+  bodySpriteSheetBuilder.addAnimation("die", spriteFrames);
   var bodySpriteSheet = bodySpriteSheetBuilder.build();
 
   var legSpriteSheetBuilder = new createjs.SpriteSheetBuilder();
@@ -172,7 +178,8 @@ function handleComplete(event) {
   var legSpriteSheet = legSpriteSheetBuilder.build();
 
 
-  var human = Human(stage, bodySpriteSheet, legSpriteSheet, {x: 200, y: height - groundImg.height});
+  var human = Human(stage, bodySpriteSheet, legSpriteSheet, 400, height - groundImg.height);
+  humans.push(human);
   grappable.push(human);
 
 
@@ -198,6 +205,9 @@ function tick(event) {
     buildings.tick();
     buildings2.tick();
     ground.tick();
+    humans.forEach(function (human) {
+      human.tick();
+    });
   }
 
   stage.update(event);
