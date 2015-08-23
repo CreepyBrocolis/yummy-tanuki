@@ -55,7 +55,7 @@ function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
 
         humanBody.x = human.xPosition - camera.xPosition - humanBody.magicXOffset;
         humanBody.y = human.yPosition - camera.yPosition;
-    }
+    };
 
 
     human.move = function (deltaS) {
