@@ -189,7 +189,7 @@ function handleComplete(event) {
   var legSpriteSheet = legSpriteSheetBuilder.build();
 
 
-  var human = Human(stage, bodySpriteSheet, legSpriteSheet, 400, height - groundImg.height);
+  var human = Human(stage, bodySpriteSheet, legSpriteSheet, 800, height - groundImg.height);
   humans.push(human);
   grappable.push(human.humanBody);
   grappable.push(human.humanLegs);
@@ -218,7 +218,7 @@ function tick(event) {
     buildings2.tick();
     ground.tick();
     humans.forEach(function (human) {
-      human.tick();
+      human.tick(deltaS);
     });
   }
 

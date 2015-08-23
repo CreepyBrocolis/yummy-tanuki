@@ -1,9 +1,11 @@
 function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
 
     var humanBody = new createjs.Sprite(bodySpritesheet, "idle");
-
     var humanLegs = new createjs.Sprite(legSpriteSheet, "walk");
 
+    humanBody.height = 675;
+    humanBody.magicXOffset = 75;
+    humanLegs.height = 600;
 
     var xPosition = x;
     var yPosition = y - humanBody.height - humanLegs.height;
@@ -24,7 +26,7 @@ function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
         humanLegs: humanLegs,
         humanBody: humanBody,
         xPosition: xPosition,
-        yPosition: yPosition,
+        yPosition: yPosition
     };
 
     human.movementSpeed = -4;
@@ -51,13 +53,13 @@ function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
         humanLegs.x = human.xPosition - camera.xPosition;
         humanLegs.y = human.yPosition - camera.yPosition + humanBody.height;
 
-        humanBody.x = human.xPosition - camera.xPosition;
+        humanBody.x = human.xPosition - camera.xPosition - humanBody.magicXOffset;
         humanBody.y = human.yPosition - camera.yPosition;
     }
 
 
     human.move = function (deltaS) {
-        human.setPosition(human.x + deltaS * human.movementSpeed, human.y);
+        human.setPosition(human.xPosition + deltaS * human.movementSpeed, human.yPosition);
     };
 
 

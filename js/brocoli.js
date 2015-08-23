@@ -7,7 +7,6 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   brocoli.regY = 60;
   brocoli.y = initialPos - 60;
   brocoli.x = 120;
-  brocoli.yStart = brocoli.y;
   brocoli.lastDistanceTraveled = 0;
 
   stage.addChild(brocoli);
