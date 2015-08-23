@@ -22,6 +22,9 @@ function ParallaxeObject(container, width, sprite, position, movementSpeed) {
     if (sprite.x > width) {
       sprite.x = (sprite.x - width) - width;
     }
+
+    sprite1.y = sprite1.yPosition - camera.yPosition * movementSpeed;
+    sprite2.y = sprite2.yPosition - camera.yPosition * movementSpeed;
   }
 
   var tick = function (distance) {

@@ -6,7 +6,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   brocoli.regX = 60;
   brocoli.regY = 60;
   brocoli.y = initialPos - 60;
-  brocoli.x = 60;
+  brocoli.x = 120;
   brocoli.yStart = brocoli.y;
   brocoli.lastDistanceTraveled = 0;
 
@@ -15,6 +15,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   var grapple = Grapple(stage, img);
   grapple.toggleHide();
   dispatcher.addEventListener("GRAPPLE_OK", moveToGrapple);
+  dispatcher.addEventListener("GRAPPLE_BACK", grappleBack);
 
   var movementSpeed = 100;
   var jumpStrength = 300;
@@ -30,13 +31,16 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   function moveToGrapple() {
     // Move broco to the grapple
-    grappling = false;
     movingToGrapple = true;
 
     wantedPos.x = grapple.x();
     wantedPos.y = grapple.y();
+  }
 
-    velocity.x = wantedPos.x - brocoli.x;
+  function grappleBack() {
+    grappling = false;
+    movingToGrapple = false;
+    grapple.toggleHide();
   }
 
   function animationEnded(evt) {
@@ -57,12 +61,17 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
   function move(deltaS) {
     if (movingToGrapple) {
       // Deactivate any movement
-      moveTo(deltaS, brocoli, wantedPos, grappleSpeed);
+      var pouet = twoPointDistance(brocoli, wantedPos);
 
-      if (brocoli.x === wantedPos.x && brocoli.y === wantedPos.y) {
-        movingToGrapple = false;
-        grapple.toggleHide();
-      }
+      var distance = Math.min(deltaS * grappleSpeed, pouet.distance);
+
+      brocoli.lastDistanceTraveled = pouet.xDistance / pouet.distance * distance;
+
+      velocity.x += brocoli.lastDistanceTraveled;
+      velocity.y += pouet.yDistance / pouet.distance * distance;
+
+      grapple.back(brocoli.x, brocoli.y);
+
     } else {
       //player moving
       if (!jumping && velocity.y === 0.0 && velocity.x !== 0) {
@@ -70,17 +79,18 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
       }
 
       //gravity
-      if (!jumping && brocoli.y >= floorHeight - 60) { //ground height ?
+      if (!jumping && brocoli.y >= (floorHeight - 60) - camera.yPosition) { //ground height ?
         velocity.y = 0.0;
         velocity.x = 0.0;
       } else {
         velocity.y += gravity * deltaS;
       }
 
-      brocoli.x += (velocity.x) * deltaS;
-      brocoli.y += (velocity.y) * deltaS;
-      brocoli.lastDistanceTraveled = (velocity.x) * deltaS;
+      //brocoli.x += (velocity.x) * deltaS;
+      //brocoli.y += (velocity.y) * deltaS;
     }
+    camera.yPosition += (velocity.y) * deltaS;
+    brocoli.lastDistanceTraveled = (velocity.x) * deltaS;
   }
 
   var tick = function (deltaS) {

@@ -17,7 +17,8 @@ var width,
 
 var brocoli,
   hill,
-  buildings, buildings2;
+  buildings, buildings2,
+  ground;
 
 var dispatcher = EventDispatcher();
 
@@ -105,11 +106,7 @@ function handleComplete(event) {
 
   hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 2);
 
-  var ground = new createjs.Shape();
-  ground.graphics.beginBitmapFill(groundImg).drawRect(0, 0, width, groundImg.height);
-  ground.tileW = groundImg.width;
-  ground.y = height - groundImg.height;
-  stage.addChild(ground);
+  ground = Ground(stage, groundImg);
 
   var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
   var spriteFrames = [];
@@ -165,6 +162,7 @@ function tick(event) {
     hill.tick(brocoli.distance());
     buildings.tick(brocoli.distance());
     buildings2.tick(brocoli.distance());
+    ground.tick();
   }
 
   stage.update(event);

@@ -4,10 +4,12 @@ function Grapple(stage, img) {
   grapple.regY = img.height / 2;
   stage.addChild(grapple);
 
+  var movingBack = false;
   var speed = 1200;
   var wantedPos = {x: grapple.x, y: grapple.y};
 
   var grappleTo = function (x, y, fromX, fromY) {
+    movingBack = false;
     grapple.x = fromX;
     grapple.y = fromY;
     // Move the sprite from the current position to the new one
@@ -24,8 +26,14 @@ function Grapple(stage, img) {
     moveTo(deltaS, grapple, wantedPos, speed);
 
     if (grapple.x === wantedPos.x && grapple.y === wantedPos.y) {
-      dispatcher.dispatchEvent("GRAPPLE_OK");
+      dispatcher.dispatchEvent(movingBack ? "GRAPPLE_BACK" : "GRAPPLE_OK");
     }
+  };
+
+  var back = function (x, y) {
+    movingBack = true;
+    wantedPos.x = x;
+    wantedPos.y = y;
   };
 
   return {
@@ -36,6 +44,7 @@ function Grapple(stage, img) {
       return grapple.y
     },
     grapple: grappleTo,
+    back: back,
     tick: tick,
     toggleHide: function () {
       grapple.visible = !grapple.visible;
