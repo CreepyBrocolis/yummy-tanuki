@@ -217,10 +217,11 @@ function tick(event) {
     buildings.tick();
     buildings2.tick();
     ground.tick();
-    humans.forEach(function (human) {
-      human.tick(deltaS);
-    });
   }
+
+  humans.forEach(function (human) {
+    human.tick(deltaS);
+  });
 
   stage.update(event);
 }

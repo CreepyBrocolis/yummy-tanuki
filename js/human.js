@@ -29,7 +29,7 @@ function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
         yPosition: yPosition
     };
 
-    human.movementSpeed = -4;
+    human.movementSpeed = -100;
     human.isAlive = true;
 
 
@@ -47,13 +47,13 @@ function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
 
 
     human.setPosition = function (x, y) {
-        human.xPosition = x;
+        human.xPosition = x - camera.xPosition;
         human.yPosition = y;
 
-        humanLegs.x = human.xPosition - camera.xPosition;
-        humanLegs.y = human.yPosition - camera.yPosition + humanBody.height;
+        humanLegs.x = human.xPosition;
+        humanLegs.y = human.yPosition + humanBody.height - camera.yPosition;
 
-        humanBody.x = human.xPosition - camera.xPosition - humanBody.magicXOffset;
+        humanBody.x = human.xPosition - humanBody.magicXOffset;
         humanBody.y = human.yPosition - camera.yPosition;
     };
 
