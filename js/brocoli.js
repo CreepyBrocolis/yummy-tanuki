@@ -19,7 +19,7 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var movementSpeed = 100;
   var jumpStrength = -300;
-  var grappleSpeed = 800;
+  var grappleSpeed = 1200;
   var gravity = 800;
   var jumping = false;
 
@@ -107,9 +107,15 @@ function Brocoli(stage, spriteSheet, img, initialPos) {
 
   var grap = function (event) {
     if (!grappling) {
-      grappling = true;
-      grapple.toggleHide();
-      grapple.grapple(event.stageX, event.stageY, brocoli.x, brocoli.y);
+      var hit = false;
+      grappable.forEach(function (entity) {
+        hit = collide(entity, event.stageX, event.stageY);
+      });
+      if (hit) {
+        grappling = true;
+        grapple.toggleHide();
+        grapple.grapple(event.stageX, event.stageY, brocoli.x, brocoli.y);
+      }
     }
   };
 

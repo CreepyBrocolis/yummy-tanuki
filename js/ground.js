@@ -6,11 +6,15 @@ function Ground(stage, groundImg) {
   ground.yPosition = ground.y;
   stage.addChild(ground);
 
-  function tick() {
-    ground.y = ground.yPosition - camera.yPosition;
-  }
+  ground.tick = function tick() {
+    ground.y = ground.yPosition - camera.yPosition*2;
+  };
 
+
+  /*
   return {
     tick: tick
-  }
+  }*/
+
+  return ground;
 }

@@ -7,11 +7,9 @@ function Human (spritesheet) {
 
 
     human.move = function (deltaS) {
-        if (human.isAlive) {
-            human.xPosition += deltaS * human.movementSpeed;
-            human.x = human.xPosition - camera.xPosition;
-            human.y = human.yPosition - camera.yPosition;
-        }
+        human.xPosition += deltaS * human.movementSpeed;
+        human.x = human.xPosition - camera.xPosition;
+        human.y = human.yPosition - camera.yPosition;
     };
 
     human.die = function () {
@@ -24,7 +22,7 @@ function Human (spritesheet) {
             human.move(deltaS);
         else
             human.die();
-    }
+    };
 
     return human;
 }

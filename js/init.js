@@ -20,11 +20,17 @@ var brocoli,
   buildings, buildings2,
   ground;
 
+var grappable = [];
+
 var dispatcher = EventDispatcher();
 
 var camera = Camera();
 
 var floorHeight;
+
+function collide(object, x, y) {
+  return object.hitTest(x - object.x, y - object.y);
+}
 
 function init() {
   canvas = document.getElementById("myCanvas");
@@ -107,6 +113,7 @@ function handleComplete(event) {
   hill = ParallaxeObject(stage, width, hillImg, height - groundImg.height - hillImg.height, 2);
 
   ground = Ground(stage, groundImg);
+  grappable.push(ground);
 
   var spriteSheetBuilder = new createjs.SpriteSheetBuilder();
   var spriteFrames = [];
