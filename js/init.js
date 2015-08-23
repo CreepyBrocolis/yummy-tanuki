@@ -159,9 +159,9 @@ function tick(event) {
   brocoli.tick(deltaS);
 
   if (brocoli.isMoving()) {
-    hill.tick(brocoli.distance());
-    buildings.tick(brocoli.distance());
-    buildings2.tick(brocoli.distance());
+    hill.tick();
+    buildings.tick();
+    buildings2.tick();
     ground.tick();
   }
 
