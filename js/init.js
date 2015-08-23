@@ -80,6 +80,9 @@ function init() {
   for (i = 0; i < 30; ++i) {
     manifest.push({src: "land/arm.00" + (i < 10 ? "0" : "") + i + ".png", id: "land" + i});
   }
+  for (i = 0; i < 30; ++i) {
+    manifest.push({src: "leg_walk/leg_walk.00" + (i < 10 ? "0" : "") + i + ".png", id: "walk" + i});
+  }
 
   loader = new createjs.LoadQueue(false);
   loader.addEventListener("progress", handleProgress);
@@ -147,6 +150,31 @@ function handleComplete(event) {
   var spriteSheet = spriteSheetBuilder.build();
 
   brocoli = Brocoli(stage, spriteSheet, grappleImg, height - groundImg.height);
+
+
+
+  var bodySpriteSheetBuilder = new createjs.SpriteSheetBuilder();
+  spriteFrames = [];
+  for (i = 0; i < 30; ++i) {
+    bodySpriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("idle" + i)));
+    spriteFrames.push(i);
+  }
+  bodySpriteSheetBuilder.addAnimation("idle", spriteFrames);
+  var bodySpriteSheet = bodySpriteSheetBuilder.build();
+
+  var legSpriteSheetBuilder = new createjs.SpriteSheetBuilder();
+  spriteFrames = [];
+  for (i = 0; i < 30; ++i) {
+    legSpriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("walk" + i)));
+    spriteFrames.push(i);
+  }
+  spriteSheetBuilder.addAnimation("walk", spriteFrames);
+  var legSpriteSheet = legSpriteSheetBuilder.build();
+
+
+  var human = Human(stage, bodySpriteSheet, legSpriteSheet, {x: 200, y: height - groundImg.height});
+  grappable.push(human);
+
 
   stage.addEventListener("click", brocoli.grapple);
   dispatcher.addEventListener("startMoveRight", brocoli.startMoveRight);
