@@ -1,5 +1,5 @@
 function Human (stage, bodySpritesheet, legSpriteSheet, x, y) {
-    var humanBody = new createjs.Sprite(bodySpritesheet, "die");
+    var humanBody = new createjs.Sprite(bodySpritesheet, "idle");
 
 
     var humanLegs = new createjs.Sprite(legSpriteSheet, "walk");

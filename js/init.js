@@ -89,6 +89,9 @@ function init() {
   for (i = 0; i < 30; ++i) {
     manifest.push({src: "top_death/top_death.00" + (i < 10 ? "0" : "") + i + ".png", id: "topDie" + i});
   }
+  for (i = 0; i < 30; ++i) {
+    manifest.push({src: "top_idle/top_idle.00" + (i < 10 ? "0" : "") + i + ".png", id: "topIdle" + i});
+  }
 
   loader = new createjs.LoadQueue(false);
   loader.addEventListener("progress", handleProgress);
@@ -166,6 +169,14 @@ function handleComplete(event) {
     spriteFrames.push(i);
   }
   bodySpriteSheetBuilder.addAnimation("die", spriteFrames);
+
+  spriteFrames = [];
+  for (i = 0; i < 30; ++i) {
+    bodySpriteSheetBuilder.addFrame(new createjs.Bitmap(loader.getResult("topIdle" + i)));
+    spriteFrames.push(30 + i);
+  }
+  bodySpriteSheetBuilder.addAnimation("idle", spriteFrames);
+
   var bodySpriteSheet = bodySpriteSheetBuilder.build();
 
   var legSpriteSheetBuilder = new createjs.SpriteSheetBuilder();
