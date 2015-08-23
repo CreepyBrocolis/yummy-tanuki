@@ -191,7 +191,8 @@ function handleComplete(event) {
 
   var human = Human(stage, bodySpriteSheet, legSpriteSheet, 400, height - groundImg.height);
   humans.push(human);
-  grappable.push(human);
+  grappable.push(human.humanBody);
+  grappable.push(human.humanLegs);
 
 
   stage.addEventListener("click", brocoli.grapple);
